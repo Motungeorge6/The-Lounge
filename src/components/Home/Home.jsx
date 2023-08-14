@@ -12,10 +12,17 @@ import {
   FormTitle,
   MixologyPage,
   SubForm,
+  FormContainers,
+  StyledCalendar,
+  StyledEmailInput,
 } from "./HomeStyled";
 import Nest from "../../assets/Nest Home.jpg";
+import DropdownMenu from "../Dropdown/DropdownStyled";
 
 const Home = () => {
+  const handleEventTypeChange = (event) => {
+    // Handle type of event change
+  };
   return (
     <div>
       <Header />
@@ -23,10 +30,9 @@ const Home = () => {
         <TextOverlay>
           <Text>THE NEST LOUNGE</Text>
           <FormTitle>Reserve a Table</FormTitle>
-          <FormContainer>
+          {/* <FormContainer>
             <SubForm>
               <FormLabel>Email:</FormLabel>
-              <FormInput type="email" />
             </SubForm>
             <SubForm>
               <FormLabel>Password:</FormLabel>
@@ -37,10 +43,19 @@ const Home = () => {
               <FormInput type="password" />
             </SubForm>
             <FormButton>Submit</FormButton>
-          </FormContainer>
+          </FormContainer> */}
+
+          <FormContainers>
+            <DropdownMenu selectedOption="" onChange={handleEventTypeChange} />
+            <StyledCalendar type="date" />
+            <StyledEmailInput type="email" placeholder="Email" />
+            <FormButton>Submit</FormButton>
+          </FormContainers>
         </TextOverlay>
       </HomeContainer>
-      <MixologyPage></MixologyPage>
+      <MixologyPage>
+        <h1>bsgdv scsfuege</h1>
+      </MixologyPage>
       <Footer />
     </div>
   );

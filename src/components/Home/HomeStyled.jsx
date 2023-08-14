@@ -76,3 +76,24 @@ export const MixologyPage = styled.div`
   height: 70vh;
   background-color: blue;
 `;
+
+export const FormContainers = styled.div`
+  display: flex;
+  // flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5%;
+  margin: 20px;
+`;
+
+export const StyledCalendar = styled.input`
+  width: 150px;
+  height: 30px;
+  border-radius: 5px;
+`;
+
+export const StyledEmailInput = styled.input`
+  width: 200px;
+  height: 30px;
+  border-radius: 5px;
+`;
