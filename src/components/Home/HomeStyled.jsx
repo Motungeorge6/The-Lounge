@@ -74,7 +74,12 @@ export const FormTitle = styled.h2`
 export const MixologyPage = styled.div`
   width: 100%;
   height: 70vh;
-  background-color: blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  background-color: purple;
 `;
 
 export const FormContainers = styled.div`
@@ -96,4 +101,25 @@ export const StyledEmailInput = styled.input`
   width: 200px;
   height: 30px;
   border-radius: 5px;
+`;
+
+export const Mixology = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  // background-color: green;
+  // width: 80%;
+`;
+export const MixologyText = styled.div`
+  font-size: 100px;
+  // margin-top: 10%;
+  font-weight: 500;
+`;
+
+export const MixologySubText = styled.div`
+  font-size: 20px;
+  font-weight: 200;
+  // margin-bottom: 10%;
+  width: 70%;
 `;

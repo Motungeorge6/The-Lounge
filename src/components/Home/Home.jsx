@@ -10,11 +10,14 @@ import {
   FormInput,
   FormButton,
   FormTitle,
-  MixologyPage,
+  Mixology,
   SubForm,
+  MixologyPage,
   FormContainers,
   StyledCalendar,
   StyledEmailInput,
+  MixologyText,
+  MixologySubText,
 } from "./HomeStyled";
 import Nest from "../../assets/Nest Home.jpg";
 import DropdownMenu from "../Dropdown/DropdownStyled";
@@ -54,7 +57,14 @@ const Home = () => {
         </TextOverlay>
       </HomeContainer>
       <MixologyPage>
-        <h1>bsgdv scsfuege</h1>
+        <Mixology>
+          <MixologyText>Mix$Match is our business</MixologyText>
+          <MixologySubText>
+            Explore I'm a paragraph. Click here to add your own text and edit
+            me. It’s easy. Just click “Edit Text” or double click me to add your
+            own content and make changes to the font.our menu
+          </MixologySubText>
+        </Mixology>
       </MixologyPage>
       <Footer />
     </div>
