@@ -48,9 +48,10 @@ export const RightFooter = styled.div`
   width: 41%;
   margin: 0;
   height: 100%;
+  color: #000000c2;
   line-height: 1.5em;
-  /* background-color: green; */
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 100;
   display: flex;
   flex-direction: column;
   justify-content: center;

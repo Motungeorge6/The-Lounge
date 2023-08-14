@@ -24,11 +24,14 @@ const Footer = () => {
         <RightFooter>
           <span>VISIT US</span>
           <br></br>
-          <p>500 Terry Francine Street</p>
-          <p>San Francisco, CA 94158</p>
+          <p>1A Hughes Ave, Yaba</p>
+          <p> 101245, Lagos</p>
           <p>Tel: 123-456-7890</p>
-          <p>​ Open from 6pm to 2am</p>
+          <br></br>
+          <p>​Open from 8am to 12pm</p> <br></br>
+          <br></br>
           <p> WORK WITH US</p>
+          <br></br>
           <p> join our team at the bar</p>
           <p>Contact us at info@mysite.com</p>
         </RightFooter>
