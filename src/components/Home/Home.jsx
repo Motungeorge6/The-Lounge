@@ -18,6 +18,7 @@ import {
   StyledEmailInput,
   MixologyText,
   MixologySubText,
+  Overlay,
 } from "./HomeStyled";
 import Nest from "../../assets/Nest Home.jpg";
 import DropdownMenu from "../Dropdown/DropdownStyled";
@@ -28,8 +29,8 @@ const Home = () => {
   };
   return (
     <div>
-      <Header />
       <HomeContainer imageUrl={Nest}>
+        <Overlay />
         <TextOverlay>
           <Text>THE NEST LOUNGE</Text>
           <FormTitle>Reserve a Table</FormTitle>
@@ -66,7 +67,6 @@ const Home = () => {
           </MixologySubText>
         </Mixology>
       </MixologyPage>
-      <Footer />
     </div>
   );
 };

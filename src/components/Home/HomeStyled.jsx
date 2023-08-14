@@ -9,7 +9,14 @@ export const HomeContainer = styled.div`
   background-image: ${({ imageUrl }) => `url("${imageUrl}")`};
   background-size: cover;
 `;
-
+export const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 89vh;
+  background-color: rgba(0, 0, 0, 0.3);
+`;
 export const TextOverlay = styled.div`
   justify-content: center;
   display: flex;
@@ -79,7 +86,6 @@ export const MixologyPage = styled.div`
   justify-content: center;
   align-items: center;
   padding: 0;
-  background-color: purple;
 `;
 
 export const FormContainers = styled.div`

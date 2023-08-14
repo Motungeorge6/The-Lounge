@@ -7,21 +7,28 @@ import {
   SocialMediaContainer,
   SocialMediaLink,
 } from "./headerStyled";
+import Logos from "../../assets/Logo.png";
+import { BsInstagram, BsFacebook } from "react-icons/bs";
 
 const Header = () => {
   return (
     <HeaderContainer>
-      <Logo>Logo</Logo>
+      <Logo>
+        <img src={Logos} style={{ width: "100px" }} alt="Logo" />
+      </Logo>
       <MenuList>
         <MenuItem>Home</MenuItem>
-        <MenuItem>Info</MenuItem>
         <MenuItem>About Us</MenuItem>
-        <MenuItem>Contact Us</MenuItem>
+        <MenuItem>Menu</MenuItem>
+        <MenuItem>Book a Table</MenuItem>
       </MenuList>
       <SocialMediaContainer>
-        <SocialMediaLink href="#">Facebook</SocialMediaLink>
-        <SocialMediaLink href="#">Twitter</SocialMediaLink>
-        <SocialMediaLink href="#">Instagram</SocialMediaLink>
+        <SocialMediaLink href="#">
+          <BsFacebook />
+        </SocialMediaLink>
+        <SocialMediaLink href="#">
+          <BsInstagram />
+        </SocialMediaLink>
       </SocialMediaContainer>
     </HeaderContainer>
   );
