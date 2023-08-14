@@ -33,28 +33,6 @@ const Home = () => {
         <Overlay />
         <TextOverlay>
           <Text>THE NEST LOUNGE</Text>
-          <FormTitle>Reserve a Table</FormTitle>
-          {/* <FormContainer>
-            <SubForm>
-              <FormLabel>Email:</FormLabel>
-            </SubForm>
-            <SubForm>
-              <FormLabel>Password:</FormLabel>
-              <FormInput type="password" />
-            </SubForm>
-            <SubForm>
-              <FormLabel>Password:</FormLabel>
-              <FormInput type="password" />
-            </SubForm>
-            <FormButton>Submit</FormButton>
-          </FormContainer> */}
-
-          <FormContainers>
-            <DropdownMenu selectedOption="" onChange={handleEventTypeChange} />
-            <StyledCalendar type="date" />
-            <StyledEmailInput type="email" placeholder="Email" />
-            <FormButton>Submit</FormButton>
-          </FormContainers>
         </TextOverlay>
       </HomeContainer>
       <MixologyPage>

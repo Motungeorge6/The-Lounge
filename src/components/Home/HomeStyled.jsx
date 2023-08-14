@@ -15,7 +15,7 @@ export const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 89vh;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.5);
 `;
 export const TextOverlay = styled.div`
   justify-content: center;
@@ -28,8 +28,7 @@ export const TextOverlay = styled.div`
 export const Text = styled.h1`
   font-size: 65px;
   color: #ffffff;
-  font-weight: bolder;
-  margin-top: 13%;
+  font-weight: 800;
 `;
 
 export const FormContainer = styled.div`
