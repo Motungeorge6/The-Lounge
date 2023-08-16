@@ -249,7 +249,7 @@ const handleAttendeesChange = (event) => {
               value={formValues.fullName}
               onChange={handleChange}
               id="fullName"
-              name="FullName"
+              name="fullName"
             />
                         <ErrorMessage>{formErrors.fullName}</ErrorMessage>
           </FormRowItems>
@@ -261,7 +261,7 @@ const handleAttendeesChange = (event) => {
               value={formValues.phoneNumber}
               onChange={handleChange}
               id="phoneNumber"
-              name="PhoneNumber"
+              name="phoneNumber"
             />
                            <ErrorMessage>{formErrors.phoneNumber}</ErrorMessage>
             </FormRowItems>
