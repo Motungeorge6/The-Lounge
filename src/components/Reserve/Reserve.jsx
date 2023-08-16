@@ -90,7 +90,7 @@ font-size:15px;
 `
 const SubmitCont = styled.div`
 display:flex;
-justify-content: center;
+justify-content: right;
 align-items:center;
 width:100%
 `
@@ -348,7 +348,7 @@ const handleChange = (event) => {
             </RightForm>
             </Tform>
             <SubmitCont>
-            <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
+            <SubmitButton onClick={handleSubmit}>Book a Table</SubmitButton>
             </SubmitCont>
         </FormInner>
       </FormContainer>
