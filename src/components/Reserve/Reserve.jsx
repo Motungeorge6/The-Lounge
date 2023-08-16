@@ -195,9 +195,11 @@ const handleAttendeesChange = (event) => {
 
   const handleSubmit =(event)=>{
     event.preventDefault();
+    handleAttendeesChange(event);
     setFormErrors(validate(formValues));
     setIsSubmit(true);
   }
+  
   
   useEffect(() => {
     console.log(formErrors);
@@ -221,16 +223,11 @@ const handleAttendeesChange = (event) => {
       errors.purpose = "This Field is required"
     }
     errors.email = !values.email ? "This Field is required" : (!regex.test(values.email) ? "This is not a valid email format" : null);
-    errors.attendee = !values.attendee ? "This Field is required" : (values.attendee > 75 ? "Cannot exceed 75" : null);
+    setAttendeesError(!values.attendee ? "This Field is required" : (values.attendee > 75 ? "Cannot exceed 75" : null));
    errors.date = !values.date ? "This Field is required" : (age < 18 ? "You cannot be less than 18 years" : null);
     return errors;
   }
 
-  // const validateAttendee=(values)=>{
-  //   const errors = {}
-  //   errors.attendee = !values.attendee ? "This Field is required" : (values.attendee > 75 ? "Cannot exceed 75" : null);
-  //   return errors;
-  // }
   return (
     <CollaborateContainer>
       <InnerContainer>
