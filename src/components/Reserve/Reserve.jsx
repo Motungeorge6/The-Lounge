@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const CollaborateContainer = styled.div`
@@ -42,30 +42,71 @@ const FormContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 50%;
-  padding: 0 3%;
-  height: 100vh;
+  padding: 0 3% 0 0;
+  height: 100;
 `;
 
 const FormInner = styled.div`
-  display: flex;
   align-items: center;
   background-color: #fff2c7;
   width: 100%;
-  padding: 5%;
+  padding:5% 5% 0 0;
   border-radius: 10px;
-  flex-direction: column;
+  flex-direction: row;
   height: 55vh;
 `;
 
-const FormRow = styled.div`
+const LeftForm = styled.div`
   display: flex;
+  flex-direction: column;
   width: 100%;
   gap: 10px;
-  margin-top: 3%;
+  margin-top: 1px;
+  margin
   justify-content: space-between;
   align-items: center;
 `;
+const RightForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+  margin-top: 1px;
+  justify-content: space-between;
+  align-items: left:
+`;
 
+const FormRowItems = styled.div`
+margin-bottom: 20px;
+`
+const Tform = styled.div`
+display:flex;
+`
+
+const ErrorMessage = styled.div`
+color:red;
+height :10px;
+font-size:15px;
+`
+const SubmitCont = styled.div`
+display:flex;
+justify-content: center;
+align-items:center;
+width:100%
+`
+const SubmitButton = styled.button`
+  font-size: 14px;
+  line-height: 18px;
+  font-style: normal;
+  font-weight: 500px;
+  border: 2px solid #ff2e2e;
+  border-radius: 8px;
+  width: 100px;
+  height: 45px;
+  color: #ff2e2e;
+  margin-top:1px;
+  background-color: #fff2c7;
+`;
 const Input = styled.input`
   border: 1px solid transparent;
   width: 100%;
@@ -113,82 +154,67 @@ const DropdownIcon = styled.div`
   cursor: pointer;
 `;
 
-const SubmitButton = styled.button`
-  font-size: 14px;
-  line-height: 18px;
-  font-style: normal;
-  font-weight: 500px;
-  border: 2px solid #ff2e2e;
-  border-radius: 8px;
-  width: 100px;
-  height: 50px;
-  color: #ff2e2e;
-  margin-top: 5%;
-  margin-left: 70%;
-  background-color: #fff2c7;
-`;
-const ErrorText = styled.p`
-  color: red;
-  font-size: 14px;
-  margin-top: 5px;
-`;
-const Reserve = () => {
-  const [selectedOption, setSelectedOption] = useState("");
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [fullName, setFullName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
-  const [attendee, setAttendee] = useState("");
-  const [ageError, setAgeError] = useState(false);
-  const [dateOfBirth, setDateOfBirth] = useState(new Date());
 
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
+
+const Reserve = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
   const handleOptionSelect = (option) => {
-    setSelectedOption(option);
+    handleDropdownChange(option);
     setIsDropdownOpen(false);
   };
 
-  const handleFullNameChange = (event) => {
-    setFullName(event.target.value);
-  };
-  const handleDateChange = (date) => {
-    setDateOfBirth(date);
-    setAgeError(false);
+  const initialValues = {fullname:"", phonenumber:"", email:"", attendee:"", date:"", purpose:""};
+  const [formValues, setFormValues] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+
+  const handleDropdownChange = (option) => {
+    setFormValues({...formValues, purpose: option});
   };
 
-  const handlePhoneNumberChange = (event) => {
-    setPhoneNumber(event.target.value);
-  };
+const handleChange = (event) => {
+  const { name, value } = event.target;
+  console.log("Updating form value:", name, value);
+  setFormValues({ ...formValues, [name]: value });
+};
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handleAttendeeChange = (event) => {
-    setAttendee(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
+  const handleSubmit =(event)=>{
     event.preventDefault();
-    const today = new Date();
-    const age = today.getFullYear() - dateOfBirth.getFullYear();
-
-    if (age < 18) {
-      setAgeError(true); // Set age error if age is less than 18
-    } else if (fullName && email && attendee && dateOfBirth) {
-      alert("Successful!");
-    } else {
-      alert("Unsuccessful. Please fill in all the required fields.");
+    setFormErrors(validate(formValues));
+    setIsSubmit(true);
+  }
+  
+  useEffect(() => {
+    console.log(formErrors);
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log(formValues);
     }
-  };
+  }, );
 
+  const validate=(values)=>{
+    const errors = {}
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    const today = new Date().getFullYear();
+      const age = today - Number(values.date.substring(0, 4));
+    if(!values.fullName){
+      errors.fullName = "Full name is required"
+    }
+    if(!values.phoneNumber){
+      errors.phoneNumber = "This Field is required"
+    }
+    if(!values.purpose){
+      errors.purpose = "This Field is required"
+    }
+    errors.email = !values.email ? "This Field is required" : (!regex.test(values.email) ? "This is not a valid email format" : null);
+    errors.attendee = !values.attendee ? "This Field is required" : (values.attendee < 75 ? "Should be 75 or more" : null);
+   errors.date = !values.date ? "This Field is required" : (age < 18 ? "You cannot be less than 18 years" : null);
+    return errors;
+  }
   return (
     <CollaborateContainer>
       <InnerContainer>
@@ -198,58 +224,75 @@ const Reserve = () => {
       </InnerContainer>
       <FormContainer>
         <FormInner>
-          <FormRow>
+          <Tform>
+        <LeftForm>
+          <FormRowItems>
             <Input
               type="text"
               placeholder="Full Name"
-              value={fullName}
-              onChange={handleFullNameChange}
+              value={formValues.fullname}
+              onChange={handleChange}
               id="fullName"
               name="FullName"
+              required
             />
+                        <ErrorMessage>{formErrors.fullName}</ErrorMessage>
+          </FormRowItems>
+          
+          <FormRowItems>
+            <Input
+              type="text"
+              placeholder="Phone Number"
+              value={formValues.phonenumber}
+              onChange={handleChange}
+              id="phone Number"
+              name="Phone Number"
+            />
+                           <ErrorMessage>{formErrors.phoneNumber}</ErrorMessage>
+            </FormRowItems>
+            <FormRowItems>
+            <Input
+              type="number"
+              value={formValues.attendee}
+              onChange={handleChange}
+              placeholder="Number of Attendee"
+              id="attendee"
+              name="attendee"
+            />
+                            <ErrorMessage>{formErrors.attendee}</ErrorMessage>
+             </FormRowItems> 
+            </LeftForm>
+            <RightForm>
+            <FormRowItems>
+              <Input
+              type="email"
+              placeholder="Email"
+              id="email"
+              name="email"
+              value={formValues.email}
+              onChange={handleChange}
+            />
+                   <ErrorMessage>{formErrors.email}</ErrorMessage>
+            </FormRowItems><FormRowItems>
             <Input
               type="date"
               placeholder="Date Of Birth"
               id="date"
               name="date"
-              value={dateOfBirth}
-              onChange={handleDateChange}
+              value={formValues.date}
+              onChange={handleChange}
             />
-          </FormRow>
-          <FormRow>
-            <Input
-              type="text"
-              placeholder="Phone Number"
-              value={phoneNumber}
-              onChange={handlePhoneNumberChange}
-              id="phone Number"
-              name="Phone Number"
-            />
-            <Input
-              type="email"
-              placeholder="Email"
-              id="email"
-              name="email"
-              value={email}
-              onChange={handleEmailChange}
-            />
-          </FormRow>
-          <FormRow>
-            <Input
-              type="number"
-              value={attendee}
-              onChange={handleAttendeeChange}
-              placeholder="Number of Attendee"
-              id="attendee"
-              name="attendee"
-            />
+                <ErrorMessage>{formErrors.date}</ErrorMessage>
+          </FormRowItems>
+          
+             <FormRowItems>
             <DropdownContainer>
               <DropdownInput
                 type="text"
                 id="dropdown"
                 placeholder="Select Purpose"
-                value={selectedOption}
-                onChange={handleOptionChange}
+                value={formValues.purpose}
+                onChange={handleDropdownChange}
                 onFocus={toggleDropdown}
                 onBlur={toggleDropdown}
                 className="dropdown-input"
@@ -300,10 +343,13 @@ const Reserve = () => {
                 </DropdownMenu>
               )}
             </DropdownContainer>
-          </FormRow>
-          {ageError && <ErrorText>You must be 18 or older.</ErrorText>}
-
-          <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
+            <ErrorMessage>{formErrors.purpose}</ErrorMessage>
+            </FormRowItems>
+            </RightForm>
+            </Tform>
+            <SubmitCont>
+            <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
+            </SubmitCont>
         </FormInner>
       </FormContainer>
     </CollaborateContainer>
