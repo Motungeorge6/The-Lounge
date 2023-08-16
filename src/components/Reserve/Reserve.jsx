@@ -168,19 +168,29 @@ const Reserve = () => {
     setIsDropdownOpen(false);
   };
 
-  const initialValues = {fullname:"", phonenumber:"", email:"", attendee:"", date:"", purpose:""};
+  const initialValues = {fullName:"", phoneNumber:"", email:"", attendee:"", date:"", purpose:""};
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
+  const [attendeesError, setAttendeesError] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
-
   const handleDropdownChange = (option) => {
     setFormValues({...formValues, purpose: option});
   };
 
 const handleChange = (event) => {
   const { name, value } = event.target;
-  console.log("Updating form value:", name, value);
   setFormValues({ ...formValues, [name]: value });
+};
+
+const handleAttendeesChange = (event) => {
+  const value = event.target.value;
+  setFormValues({...formValues, attendee: value });
+
+  if (value > 75) {
+    setAttendeesError("Cannot exceed 75.");
+  } else {
+    setAttendeesError("");
+  }
 };
 
   const handleSubmit =(event)=>{
@@ -211,10 +221,16 @@ const handleChange = (event) => {
       errors.purpose = "This Field is required"
     }
     errors.email = !values.email ? "This Field is required" : (!regex.test(values.email) ? "This is not a valid email format" : null);
-    errors.attendee = !values.attendee ? "This Field is required" : (values.attendee < 75 ? "Should be 75 or more" : null);
+    errors.attendee = !values.attendee ? "This Field is required" : (values.attendee > 75 ? "Cannot exceed 75" : null);
    errors.date = !values.date ? "This Field is required" : (age < 18 ? "You cannot be less than 18 years" : null);
     return errors;
   }
+
+  // const validateAttendee=(values)=>{
+  //   const errors = {}
+  //   errors.attendee = !values.attendee ? "This Field is required" : (values.attendee > 75 ? "Cannot exceed 75" : null);
+  //   return errors;
+  // }
   return (
     <CollaborateContainer>
       <InnerContainer>
@@ -230,11 +246,10 @@ const handleChange = (event) => {
             <Input
               type="text"
               placeholder="Full Name"
-              value={formValues.fullname}
+              value={formValues.fullName}
               onChange={handleChange}
               id="fullName"
               name="FullName"
-              required
             />
                         <ErrorMessage>{formErrors.fullName}</ErrorMessage>
           </FormRowItems>
@@ -243,7 +258,7 @@ const handleChange = (event) => {
             <Input
               type="text"
               placeholder="Phone Number"
-              value={formValues.phonenumber}
+              value={formValues.phoneNumber}
               onChange={handleChange}
               id="phone Number"
               name="Phone Number"
@@ -254,12 +269,12 @@ const handleChange = (event) => {
             <Input
               type="number"
               value={formValues.attendee}
-              onChange={handleChange}
+              onChange={handleAttendeesChange}
               placeholder="Number of Attendee"
               id="attendee"
               name="attendee"
             />
-                            <ErrorMessage>{formErrors.attendee}</ErrorMessage>
+                            <ErrorMessage>{attendeesError}</ErrorMessage>
              </FormRowItems> 
             </LeftForm>
             <RightForm>
