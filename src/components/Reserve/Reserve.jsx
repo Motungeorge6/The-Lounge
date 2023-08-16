@@ -348,7 +348,7 @@ const handleChange = (event) => {
             </RightForm>
             </Tform>
             <SubmitCont>
-            <SubmitButton onClick={handleSubmit}>Reserve Now</SubmitButton>
+            <SubmitButton onClick={handleSubmit}>Reserve now</SubmitButton>
             </SubmitCont>
         </FormInner>
       </FormContainer>
