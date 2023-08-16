@@ -260,8 +260,8 @@ const handleAttendeesChange = (event) => {
               placeholder="Phone Number"
               value={formValues.phoneNumber}
               onChange={handleChange}
-              id="phone Number"
-              name="Phone Number"
+              id="phoneNumber"
+              name="PhoneNumber"
             />
                            <ErrorMessage>{formErrors.phoneNumber}</ErrorMessage>
             </FormRowItems>
