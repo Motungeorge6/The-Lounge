@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const CollaborateContainer = styled.div`
@@ -66,6 +66,10 @@ const FormRow = styled.div`
   align-items: center;
 `;
 
+const FormRowItems = styled.div`
+
+`
+
 const Input = styled.input`
   border: 1px solid transparent;
   width: 100%;
@@ -127,68 +131,66 @@ const SubmitButton = styled.button`
   margin-left: 70%;
   background-color: #fff2c7;
 `;
-const ErrorText = styled.p`
-  color: red;
-  font-size: 14px;
-  margin-top: 5px;
-`;
-const Reserve = () => {
-  const [selectedOption, setSelectedOption] = useState("");
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [fullName, setFullName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
-  const [attendee, setAttendee] = useState("");
-  const [ageError, setAgeError] = useState(false);
-  const [dateOfBirth, setDateOfBirth] = useState(new Date());
 
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
+const Reserve = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
   const handleOptionSelect = (option) => {
-    setSelectedOption(option);
+    handleDropdownChange(option);
     setIsDropdownOpen(false);
   };
 
-  const handleFullNameChange = (event) => {
-    setFullName(event.target.value);
-  };
-  const handleDateChange = (date) => {
-    setDateOfBirth(date);
-    setAgeError(false);
+  const initialValues = {fullname:"", phonenumber:"", email:"", attendee:"", date:"", purpose:""};
+  const [formValues, setFormValues] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+
+  const handleDropdownChange = (option) => {
+    setFormValues({...formValues, purpose: option});
   };
 
-  const handlePhoneNumberChange = (event) => {
-    setPhoneNumber(event.target.value);
-  };
+const handleChange = (event) => {
+  const { name, value } = event.target;
+  console.log("Updating form value:", name, value);
+  setFormValues({ ...formValues, [name]: value });
+};
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handleAttendeeChange = (event) => {
-    setAttendee(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
+  const handleSubmit =(event)=>{
     event.preventDefault();
-    const today = new Date();
-    const age = today.getFullYear() - dateOfBirth.getFullYear();
-
-    if (age < 18) {
-      setAgeError(true); // Set age error if age is less than 18
-    } else if (fullName && email && attendee && dateOfBirth) {
-      alert("Successful!");
-    } else {
-      alert("Unsuccessful. Please fill in all the required fields.");
+    setFormErrors(validate(formValues));
+    setIsSubmit(true);
+  }
+  
+  useEffect(() => {
+    console.log(formErrors);
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log(formValues);
     }
-  };
+  }, );
 
+  const validate=(values)=>{
+    const errors = {}
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    if(!values.fullName){
+      errors.fullName = "Full name is required"
+    }
+    if(!values.phoneNumber){
+      errors.phoneNumber = "Phone number is required"
+    }
+    if(!values.purpose){
+      errors.purpose = "This Field is required"
+    }
+    errors.email = !values.email ? "This Field is required" : (!regex.test(values.email) ? "This is not a valid email format" : null);
+    errors.attendee = !values.attendee ? "This Field is required" : (age < 75 ? "Attendees should be 75 or more" : null);
+      const today = new Date().getFullYear();
+      const age = today - Number(values.date.substring(0, 4));
+   errors.date = !values.date ? "This Field is required" : (age < 18 ? "You cannot be less than 18 years" : null);
+    return errors;
+  }
   return (
     <CollaborateContainer>
       <InnerContainer>
@@ -199,57 +201,74 @@ const Reserve = () => {
       <FormContainer>
         <FormInner>
           <FormRow>
+          <FormRowItems>
             <Input
               type="text"
               placeholder="Full Name"
-              value={fullName}
-              onChange={handleFullNameChange}
+              value={formValues.fullname}
+              onChange={handleChange}
               id="fullName"
               name="FullName"
+              required
             />
+          <p>{formErrors.fullName}</p>
+          </FormRowItems>
+          <FormRowItems>
             <Input
               type="date"
               placeholder="Date Of Birth"
               id="date"
               name="date"
-              value={dateOfBirth}
-              onChange={handleDateChange}
+              value={formValues.date}
+              onChange={handleChange}
             />
+                <p>{formErrors.date}</p>
+          </FormRowItems>
           </FormRow>
           <FormRow>
+          <FormRowItems>
             <Input
               type="text"
               placeholder="Phone Number"
-              value={phoneNumber}
-              onChange={handlePhoneNumberChange}
+              value={formValues.phonenumber}
+              onChange={handleChange}
               id="phone Number"
               name="Phone Number"
             />
-            <Input
+                <p>{formErrors.phoneNumber}</p>
+            </FormRowItems>
+            <FormRowItems>
+              <Input
               type="email"
               placeholder="Email"
               id="email"
               name="email"
-              value={email}
-              onChange={handleEmailChange}
+              value={formValues.email}
+              onChange={handleChange}
             />
+             <p>{formErrors.email}</p>
+            </FormRowItems>
           </FormRow>
           <FormRow>
+          <FormRowItems>
             <Input
               type="number"
-              value={attendee}
-              onChange={handleAttendeeChange}
+              value={formValues.attendee}
+              onChange={handleChange}
               placeholder="Number of Attendee"
               id="attendee"
               name="attendee"
             />
+             <p>{formErrors.attendee}</p>
+             </FormRowItems> 
+             <FormRowItems>
             <DropdownContainer>
               <DropdownInput
                 type="text"
                 id="dropdown"
                 placeholder="Select Purpose"
-                value={selectedOption}
-                onChange={handleOptionChange}
+                value={formValues.purpose}
+                onChange={handleDropdownChange}
                 onFocus={toggleDropdown}
                 onBlur={toggleDropdown}
                 className="dropdown-input"
@@ -300,9 +319,9 @@ const Reserve = () => {
                 </DropdownMenu>
               )}
             </DropdownContainer>
+            <p>{formErrors.purpose}</p>
+            </FormRowItems>
           </FormRow>
-          {ageError && <ErrorText>You must be 18 or older.</ErrorText>}
-
           <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
         </FormInner>
       </FormContainer>
